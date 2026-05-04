@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apartamenty Kościuszki 25 | Premium Real Estate</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+
+    <style>
+        /* === ZMIENNE I RESET === */
+        :root {
+            --primary-dark: #1a242f;
+            --accent-gold: #c5a880;
+            --accent-gold-hover: #b09570;
+            --bg-light: #f4f4f4;
+            --bg-white: #ffffff;
+            --text-dark: #2c3e50;
+            --text-muted: #7f8c8d;
+            
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Montserrat', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        html {
+            /* Zapobiega ucinaniu nagłówków przez przyklejone menu przy scrollowaniu */
+            scroll-padding-top: 80px; 
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--text-dark);
+            line-height: 1.7;
+            background-color: var(--bg-white);
+        }
+
+        h1, h2, h3, .logo {
+            font-family: var(--font-heading);
+        }
+
+        /* === NAWIGACJA (MENU) === */
+        nav {
+            background-color: rgba(26, 36, 47, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--accent-gold);
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            color: var(--accent-gold);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        /* Efekt podkreślenia w menu */
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 2rem;
+            color: var(--accent-gold);
+        }
+
+        /* === SEKCJA GŁÓWNA (HERO) === */
+        header {
+            height: 100vh;
+            /* Lepszy gradient dla czytelności tekstu */
+            background: linear-gradient(to right, rgba(26, 36, 47, 0.85), rgba(26, 36, 47, 0.4)), 
+                        url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover fixed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 0 10%;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            color: white;
+            line-height: 1.1;
+            max-width: 800px;
+        }
+
+        header h1 span {
+            color: var(--accent-gold);
+            font-style: italic;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        .hero-btn {
+            background-color: var(--accent-gold);
+            color: var(--primary-dark);
+            padding: 15px 35px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero-btn:hover {
+            background-color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* === WSPÓLNE STYLE SEKCJI === */
+        section {
+            padding: 6rem 10%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 4rem;
+        }
+
+        /* === KLASY ANIMACJI (Ożywienie strony) === */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* === GALERIA === */
+        #galeria {
+            background-color: var(--bg-white);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .gallery-item-wrap {
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+            position: relative;
+        }
+
+        .gallery-item {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .gallery-item-wrap:hover .gallery-item {
+            transform: scale(1.08);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item-wrap:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        /* === CENNIK === */
+        #cennik {
+            background-color: var(--bg-light);
+            position: relative;
+        }
+
+        .price-box {
+            background: white;
+            padding: 4rem 3rem;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+            border-top: 5px solid var(--accent-gold);
+        }
+
+        .price-box h3 {
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+        }
+
+        .price-value {
+            font-family: var(--font-heading);
+            font-size: 5rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin: 1rem 0;
+            line-height: 1;
+        }
+
+        .price-value span.currency {
+            font-size: 2rem;
+            vertical-align: top;
+            margin-left: 10px;
+        }
+
+        .price-info {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        /* === KONTAKT === */
+        #kontakt {
+            background-color: var(--bg-white);
+        }
+
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4rem;
+            justify-content: space-between;
+        }
+
+        .contact-info, .contact-form {
+            flex: 1;
+            min-width: 320px;
+        }
+
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        .contact-details p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-details strong {
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+
+        .contact-form {
+            background: var(--bg-light);
+            padding: 3rem;
+            border-radius: 12px;
+        }
+
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: var(--font-body);
+            transition: border-color 0.3s;
+            background: white;
+        }
+
+        .contact-form input:focus, .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+        }
+
+        .btn-submit {
+            width: 100%;
+            background-color: var(--primary-dark);
+            color: white;
+            border: none;
+            padding: 18px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--accent-gold);
+        }
+
+        /* === STOPKA === */
+        footer {
+            background-color: var(--primary-dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* === RESPONSIVE (MOBILE) === */
+        @media (max-width: 900px) {
+            header h1 {
+                font-size: 3.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                right: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: var(--primary-dark);
+                width: 100%;
+                text-align: center;
+                transition: 0.4s ease-in-out;
+                padding: 2rem 0;
+                border-bottom: 2px solid var(--accent-gold);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            header {
+                align-items: center;
+                text-align: center;
+                padding-top: 80px;
+            }
+
+            .contact-form {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#home" class="logo">Kościuszki 25</a>
+        <div class="hamburger" id="hamburger">☰</div>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#home">Start</a></li>
+            <li><a href="#galeria">Inwestycja</a></li>
+            <li><a href="#cennik">Cennik</a></li>
+            <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+    </nav>
+
+    <header id="home">
+        <h1 class="fade-in">Odkryj swoje <span>nowe życie</span> w centrum</h1>
+        <p class="fade-in">Prestiżowe apartamenty przy ulicy Kościuszki 25. Nowoczesny design, komfort i doskonała lokalizacja w sercu miasta.</p>
+        <a href="#galeria" class="hero-btn fade-in">Zobacz Ofertę</a>
+    </header>
+
+    <section id="galeria">
+        <div class="fade-in">
+            <h2 class="section-title">Wizualizacje</h2>
+            <p class="section-subtitle">Poznaj standard wykończenia</p>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item-wrap fade-in">
+                <img src="https://images.unsplash.com/photo-1502672260266-1c1de2d9d0cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Salon" class="gallery-item">
+                <div class="gallery-overlay">Przestronny Salon</div>
+            </div>
+            <div class="gallery-item-wrap fade-in">
+                <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sypialnia" class="gallery-item">
+                <div class="gallery-overlay">Sypialnia z Widokiem</div>
+            </div>
+            <div class="gallery-item-wrap fade-in">
+                <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Kuchnia" class="gallery-item">
+                <div class="gallery-overlay">Nowoczesna Kuchnia</div>
+            </div>
+            <div class="gallery-item-wrap fade-in">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Łazienka" class="gallery-item">
+                <div class="gallery-overlay">Elegancka Łazienka</div>
+            </div>
+            <div class="gallery-item-wrap fade-in">
+                <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Taras" class="gallery-item">
+                <div class="gallery-overlay">Taras Wypoczynkowy</div>
+            </div>
+            <div class="gallery-item-wrap fade-in">
+                <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Budynek z zewnątrz" class="gallery-item">
+                <div class="gallery-overlay">Elewacja Zewnętrzna</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cennik">
+        <div class="fade-in">
+            <h2 class="section-title">Ceny i Dostępność</h2>
+            <p class="section-subtitle">Wartość Twojej Inwestycji</p>
+        </div>
+        <div class="price-box fade-in">
+            <h3>Obecna cena za metr kwadratowy</h3>
+            <div class="price-value"><span id="dynamic-price">12000</span><span class="currency">PLN</span></div>
+            <p class="price-info">Wartość nieruchomości stale rośnie wraz z postępami prac deweloperskich. Nie zwlekaj z decyzją, zarezerwuj apartament w niższej cenie.</p>
+            <p style="font-size: 0.85rem; color: #aaa;">*Szacunkowy wzrost wartości o 500 PLN/m² w pierwszych 6 miesiącach od otwarcia sprzedaży (start: Maj 2026).</p>
+        </div>
+    </section>
+
+    <section id="kontakt">
+        <div class="fade-in">
+            <h2 class="section-title">Odwiedź Nas</h2>
+            <p class="section-subtitle">Umów się na spotkanie</p>
+        </div>
+        <div class="contact-container">
+            <div class="contact-info fade-in">
+                <h3>Biuro Sprzedaży Mieszkań</h3>
+                <p style="margin-bottom: 2rem; color: var(--text-muted);">Zadzwoń do nas lub odwiedź nasze biuro, aby porozmawiać o szczegółach Twojego nowego mieszkania.</p>
+                <div class="contact-details">
+                    <p><strong>Adres:</strong> ul. Kościuszki 25, 44-100 Gliwice</p>
+                    <p><strong>Telefon:</strong> +48 500 600 700</p>
+                    <p><strong>Email:</strong> sprzedaz@kosciuszki25.pl</p>
+                </div>
+                <br>
+                <h4 style="margin-bottom: 10px; font-family: var(--font-body); color: var(--primary-dark);">Godziny pracy:</h4>
+                <p style="color: var(--text-muted);">Poniedziałek - Piątek: 09:00 - 17:00<br>Sobota: po wcześniejszym umówieniu</p>
+            </div>
+            <div class="contact-form fade-in">
+                <form onsubmit="event.preventDefault(); alert('Wiadomość została wysłana pomyślnie!');">
+                    <input type="text" placeholder="Imię i Nazwisko" required>
+                    <input type="email" placeholder="Adres Email" required>
+                    <input type="tel" placeholder="Numer Telefonu (opcjonalnie)">
+                    <textarea rows="5" placeholder="O co chciałbyś/chciałabyś zapytać?" required></textarea>
+                    <button type="submit" class="btn-submit">Wyślij Zapytanie</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Apartamenty Kościuszki 25. Projekt informacyjny inwestycji.</p>
+    </footer>
+
+    <script>
+        // --- 1. Obsługa responsywnego Menu (Hamburger) ---
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.innerText = navLinks.classList.contains('active') ? '✕' : '☰';
+        });
+
+        // Zamknij menu po kliknięciu w link na telefonie
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburger.innerText = '☰';
+            });
+        });
+
+        // --- 2. Scroll Animation (Fade In na elementach) ---
+        // Kod sprawia, że elementy pojawiają się, gdy do nich "dojedziemy" myszką
+        const observerOptions = {
+            threshold: 0.15, // Odpala, gdy 15% elementu jest widoczne
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('visible');
+                // Przestaje obserwować element po jego animacji (aby nie animował się w kółko)
+                observer.unobserve(entry.target); 
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // --- 3. Dynamiczny Licznik Ceny ---
+        const startDate = new Date('2026-05-01T00:00:00').getTime(); 
+        const basePrice = 12000; 
+        const maxIncrease = 500; 
+        const durationMs = 182.5 * 24 * 60 * 60 * 1000; // ~6 miesięcy w milisekundach
+
+        function updatePrice() {
+            const now = new Date().getTime();
+            const elapsed = now - startDate;
+            
+            let currentIncrease = Math.floor((elapsed / durationMs) * maxIncrease);
+
+            if (currentIncrease < 0) currentIncrease = 0;
+            if (currentIncrease > maxIncrease) currentIncrease = maxIncrease;
+
+            const currentPrice = basePrice + currentIncrease;
+            
+            // Formatowanie liczby, aby wyglądała ładnie (np. 12 000 zamiast 12000)
+            const formattedPrice = currentPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+            document.getElementById('dynamic-price').innerText = formattedPrice;
+        }
+
+        updatePrice();
+        setInterval(updatePrice, 60000);
+    </script>
+</body>
+</html>
