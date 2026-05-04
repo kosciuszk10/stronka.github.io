@@ -111,7 +111,16 @@
         /* === WIDEO PIONOWE (9:16) === */ 
         #wideo { background-color: var(--navy); color: var(--white); } 
         #wideo .section-title { color: var(--white); } 
-        .video-container { max-width: 400px; margin: 0 auto; position: relative; padding-bottom: 177.77%; height: 0; border-radius: 20px; overflow: hidden; border: 4px solid var(--gold); box-shadow: 0 20px 50px rgba(0,0,0,0.5); } 
+        .video-container { 
+    position: relative; 
+    width: 90%; 
+    max-width: 380px; /* Szerokość idealna dla telefonu na ekranie komputera */
+    aspect-ratio: 9 / 16; 
+    margin: 40px auto; 
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
         .video-container iframe, .video-placeholder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; } 
         .video-placeholder { background: linear-gradient(to bottom, #1e293b, #0f172a); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; } 
         .play-btn { width: 70px; height: 70px; background: var(--gold); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; margin-bottom: 20px; } 
@@ -232,8 +241,8 @@
                 controls 
                 playsinline 
                 preload="auto"
-                style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px; background: #000;">
-                <source src="1000010714.mp4" type="video/mp4">
+                style="width: 100%; height: 50%; object-fit: cover; border-radius: 12px; background: #000;">
+                <source src="video.mp4" type="video/mp4">
                 Twoja przeglądarka nie obsługuje odtwarzacza wideo.
             </video>
         </div> 
