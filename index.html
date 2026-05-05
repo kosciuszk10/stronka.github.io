@@ -1,416 +1,539 @@
-<!DOCTYPE html> 
-<html lang="pl"> 
-<head> 
-    <meta charset="UTF-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>Apartamenty Kościuszki 25 | Głuchołazy</title> 
-    <link rel="preconnect" href="https://fonts.googleapis.com"> 
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet"> 
-    <style> 
-        /* === ZMIENNE === */ 
-        :root { 
-            --navy: #0f172a; 
-            --gold: #c5a880; 
-            --gold-hover: #b09570; 
-            --white: #ffffff; 
-            --light-gray: #f8fafc; 
-            --text-dark: #334155; 
-            --font-heading: 'Playfair Display', serif; 
-            --font-body: 'Montserrat', sans-serif; 
-        } 
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apartamenty Kościuszki 25 | Głuchołazy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* === ZMIENNE === */
+        :root {
+            --navy: #0f172a;
+            --gold: #c5a880;
+            --gold-hover: #b09570;
+            --white: #ffffff;
+            --light-gray: #f8fafc;
+            --text-dark: #334155;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Montserrat', sans-serif;
+        }
+
+        /* === RESET === */
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        html { scroll-padding-top: 80px; }
+        body { 
+            font-family: var(--font-body); 
+            color: var(--text-dark); 
+            line-height: 1.6; 
+            background-color: var(--white); 
+            overflow-x: hidden; 
+        }
+        h1, h2, h3, h4, .logo { font-family: var(--font-heading); color: var(--navy); }
+
+        /* === NAWIGACJA === */
+        nav { 
+            background-color: rgba(15, 23, 42, 0.95); 
+            backdrop-filter: blur(10px); 
+            padding: 1.2rem 5%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            position: fixed; 
+            width: 100%; 
+            top: 0; 
+            z-index: 1000; 
+            border-bottom: 2px solid var(--gold); 
+        }
+        .logo { font-size: 1.8rem; color: var(--gold); text-decoration: none; letter-spacing: 1px; }
+        .nav-links { list-style: none; display: flex; gap: 2.5rem; }
+        .nav-links a { color: var(--white); text-decoration: none; font-size: 0.9rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--gold); }
+        .hamburger { display: none; cursor: pointer; font-size: 2rem; color: var(--gold); }
+
+        /* === HERO === */
+        header { 
+            height: 100vh; 
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.4)), url("https://i.ibb.co/BHrZ1BcL/photo-2026-05-04-23-23-16.jpg") center/cover fixed; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: flex-start; 
+            padding: 0 10%; 
+            color: var(--white); 
+        }
+        header h1 { font-size: 4rem; margin-bottom: 1rem; color: var(--white); max-width: 800px; line-height: 1.1; }
+        header h1 span { color: var(--gold); font-style: italic; }
+        header p { font-size: 1.2rem; font-weight: 300; max-width: 600px; margin-bottom: 2rem; }
+        .btn { 
+            background-color: var(--gold); 
+            color: var(--navy); 
+            padding: 15px 35px; 
+            text-decoration: none; 
+            font-weight: 600; 
+            font-size: 1rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            border-radius: 4px; 
+            transition: all 0.3s ease; 
+            display: inline-block; 
+        }
+        .btn:hover { background-color: var(--white); transform: translateY(-3px); }
+
+        /* === SEKCJE === */
+        section { padding: 6rem 10%; }
+        .section-title { text-align: center; font-size: 2.8rem; margin-bottom: 1rem; }
+        .section-subtitle { text-align: center; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; font-size: 0.9rem; margin-bottom: 4rem; }
+
+        /* === O INWESTYCJI === */
+        #o-inwestycji { background-color: var(--light-gray); padding: 4rem 5%; }
+        .about-text h3 { font-size: 1.8rem; margin-bottom: 1.2rem; text-align: center; font-family: var(--font-heading); }
+        .about-text p { text-align: center; line-height: 1.6; max-width: 800px; margin: 0 auto; }
+
+        /* SEKCJA Z CENNIKIEM I TABELĄ O BOK SIEBIE */
+        .pricing-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 3rem;
+            align-items: stretch;
+        }
+        .highlight-box { 
+            background: var(--white); 
+            border-left: 4px solid var(--gold); 
+            padding: 2rem; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            text-align: center; 
+            border-radius: 0 8px 8px 0;
+        }
+        .price-tag { 
+            font-size: 1.8rem; 
+            font-weight: 700; 
+            color: var(--gold); 
+            font-family: var(--font-heading); 
+            display: flex; 
+            flex-wrap: wrap; 
+            align-items: baseline; 
+            justify-content: center; 
+            gap: 8px; 
+            margin: 10px 0; 
+        }
+        .old-price { font-size: 1rem; color: #94a3b8; text-decoration: line-through; }
         
-        /* === RESET === */ 
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; } 
-        html { scroll-padding-top: 80px; } 
-        body { font-family: var(--font-body); color: var(--text-dark); line-height: 1.6; background-color: var(--white); overflow-x: hidden; } 
-        h1, h2, h3, h4, .logo { font-family: var(--font-heading); color: var(--navy); } 
+        /* TABELA */
+        .pricing-table-wrapper {
+            background: var(--white);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            overflow-x: auto;
+            padding: 1.5rem;
+        }
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            min-width: 500px; /* Zapobiega ściskaniu kolumn na mobile */
+        }
+        .pricing-table th {
+            background: var(--navy);
+            color: var(--white);
+            padding: 15px;
+            font-weight: 500;
+            font-family: var(--font-body);
+        }
+        .pricing-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+        .pricing-table tr:last-child td { border-bottom: none; }
+        .pricing-table tr:nth-child(even) { background: #f8fafc; }
+        .table-footer {
+            display: block;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: 15px;
+        }
+
+        @media (min-width: 1024px) {
+            #o-inwestycji { padding: 6rem 10%; }
+            .about-text h3 { font-size: 2.5rem; }
+            .pricing-container {
+                grid-template-columns: 1fr 2fr; /* Box 1 część, Tabela 2 części */
+            }
+            .highlight-box {
+                align-items: flex-start;
+                text-align: left;
+            }
+            .price-tag { font-size: 2.5rem; justify-content: flex-start; }
+        }
+
+        /* === LOKALIZACJA === */
+        #lokalizacja { background-color: var(--light-gray); }
+        .location-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        .location-text { text-align: left; }
+        .location-text h3 { font-size: 1.8rem; margin-bottom: 1rem; color: var(--navy); }
+        .location-images {
+            display: grid;
+            grid-template-columns: 1fr; /* Zdjęcia jedno pod drugim */
+            gap: 20px;
+        }
+        .location-images img {
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 4 / 3; /* Wymusza poziomy format */
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
         
-        /* === NAWIGACJA === */ 
-        nav { background-color: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 2px solid var(--gold); } 
-        .logo { font-size: 1.8rem; color: var(--gold); text-decoration: none; letter-spacing: 1px; } 
-        .nav-links { list-style: none; display: flex; gap: 2.5rem; } 
-        .nav-links a { color: var(--white); text-decoration: none; font-size: 0.9rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; } 
-        .nav-links a:hover { color: var(--gold); } 
-        .hamburger { display: none; cursor: pointer; font-size: 2rem; color: var(--gold); } 
-        
-        /* === HERO === */ 
-        header { height: 100vh; background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.4)), url("https://i.ibb.co/dw1nqWp2/photo-2026-05-04-23-23-23-2.jpg") center/cover fixed; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 0 10%; color: var(--white); } 
-        header h1 { font-size: 4rem; margin-bottom: 1rem; color: var(--white); max-width: 800px; line-height: 1.1; } 
-        header h1 span { color: var(--gold); font-style: italic; } 
-        header p { font-size: 1.2rem; font-weight: 300; max-width: 600px; margin-bottom: 2rem; } 
-        .btn { background-color: var(--gold); color: var(--navy); padding: 15px 35px; text-decoration: none; font-weight: 600; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; border-radius: 4px; transition: all 0.3s ease; display: inline-block; } 
-        .btn:hover { background-color: var(--white); transform: translateY(-3px); } 
-        
-        /* === SEKCJE === */ 
-        section { padding: 6rem 10%; } 
-        .section-title { text-align: center; font-size: 2.8rem; margin-bottom: 1rem; } 
-        .section-subtitle { text-align: center; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; font-size: 0.9rem; margin-bottom: 4rem; } 
-        
-        /* === O INWESTYCJI === */ 
-        /* GŁÓWNA SEKCJA */
-#o-inwestycji { 
-    background-color: var(--light-gray); 
-    /* Zmiana paddingu: mniejszy na bokach na mobile, większy na górze/dole */
-    padding: 4rem 5%; 
-} 
+        @media (max-width: 992px) {
+            .location-content { grid-template-columns: 1fr; }
+            .location-text { text-align: center; }
+        }
 
-/* SIATKA (GRID) */
-.about-grid { 
-    display: grid; 
-    /* Domyślnie jedna kolumna (pod mobile) */
-    grid-template-columns: 1fr; 
-    gap: 2rem; 
-    align-items: center; 
-} 
-
-/* TEKST */
-.about-text h3 { 
-    font-size: 1.8rem; /* Nieco mniejszy font na start */
-    margin-bottom: 1.2rem; 
-    text-align: center; 
-    font-family: var(--font-heading); 
-} 
-
-.about-text p { 
-    text-align: center; 
-    line-height: 1.6;
-} 
-
-/* BOX Z CENĄ */
-.highlight-box { 
-    background: var(--white); 
-    border-left: 4px solid var(--gold); 
-    padding: 1.5rem; /* Mniejszy padding na mobile */
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
-    margin-top: 2rem; 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    text-align: center; 
-} 
-
-.price-tag { 
-    font-size: 1.8rem; /* Mniejsza cena na mobile, żeby nie wychodziła poza box */
-    font-weight: 700; 
-    color: var(--gold); 
-    font-family: var(--font-heading); 
-    display: flex; 
-    flex-wrap: wrap; /* Pozwala starej cenie przeskoczyć niżej jeśli braknie miejsca */
-    align-items: baseline; 
-    justify-content: center; 
-    gap: 8px; 
-    margin: 10px 0; 
-} 
-
-.old-price { 
-    font-size: 1rem; 
-    color: #94a3b8; 
-    text-decoration: line-through; 
-}
-
-.link-nieklikalny { 
-    pointer-events: none; 
-    cursor: default; 
-    color: gray; 
-    text-decoration: none; 
-} 
-
-/* --- RESPONSYWNOŚĆ (DLA KOMPUTERÓW) --- */
-@media (min-width: 1024px) {
-    #o-inwestycji { 
-        padding: 6rem 10%; /* Powrót do Twoich ustawień na dużym ekranie */
-    } 
-
-    .about-grid { 
-        grid-template-columns: 1fr 1.2fr; /* Dwie kolumny tylko na PC */
-        gap: 3rem; 
-    } 
-
-    .about-text h3 { 
-        font-size: 2.5rem; 
-        text-align: left; /* Na PC tekst wygląda lepiej wyrównany do lewej */
-    } 
-
-    .about-text p { 
-        text-align: left; 
-    }
-
-    .highlight-box {
-        padding: 2.5rem;
-        align-items: flex-start; /* Na PC box może być wyrównany do boku tekstu */
-        text-align: left;
-    }
-
-    .price-tag {
-        font-size: 2.5rem;
-        justify-content: flex-start;
-    }
-}
-        
-        /* === GALERIA === */ 
-        /* === GALERIA - ZMNIEJSZONA 2.5x === */ 
+        /* === NOWA GALERIA === */
         .gallery-grid { 
             display: grid; 
-            grid-template-columns: repeat(6, 1fr); 
+            grid-template-columns: 1fr 1fr; /* 2 kolumny */
             gap: 15px; 
-            width: 40%; /* Zmniejszone z 100% (czyli 2.5 raza mniej) */
-            margin: 0 auto; /* Wyśrodkowanie całej galerii */
-        } 
-
-        .gallery-item { 
+            width: 40%; /* Szersza niż stara, żeby układ wyglądał lepiej */
+            margin: 0 auto; 
+        }
+        .gal-item { 
             position: relative; 
             overflow: hidden; 
             border-radius: 6px; 
             box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
             width: 100%; 
-        } 
-
-        .gallery-item img { 
+        }
+        .gal-item img { 
             width: 100%; 
             height: 100%; 
             object-fit: cover; 
             display: block; 
             transition: transform 0.6s ease; 
-        } 
-        
-        /* Zachowanie proporcji */
-        .v-top { grid-column: span 2; aspect-ratio: 9 / 16; } 
-        .v-mid { grid-column: span 3; aspect-ratio: 9 / 16; } 
-        .h-mid { grid-column: span 2; aspect-ratio: 4 / 3; } 
-        .wide-bot { grid-column: span 6; aspect-ratio: 24 / 7; } 
+        }
+        .gal-item:hover img { transform: scale(1.05); }
 
-        .gallery-item:hover img { transform: scale(1.05); } 
-        
-        /* Na tabletach i telefonach galeria powinna być nieco szersza, żeby była czytelna */
-        @media (max-width: 1200px) {
-            .gallery-grid { width: 60%; }
+        /* Klasy sterujące wyglądem kafelków */
+        .gal-h-full { 
+            grid-column: span 2; 
+            aspect-ratio: 21 / 9; /* Poziome szerokie (Panorama) */
+        }
+        .gal-h-half { 
+            grid-column: span 1; 
+            aspect-ratio: 4 / 3; /* Poziome mniejsze */
+        }
+        .gal-v-half { 
+            grid-column: span 1; 
+            aspect-ratio: 3 / 4; /* Pionowe */
+        }
+        .link-nieklikalny { pointer-events: none; cursor: default; }
+
+        @media (max-width: 1200px) { .gallery-grid { width: 90%; } }
+        @media (max-width: 768px) {
+            .gallery-grid { grid-template-columns: 1fr; width: 100%; }
+            .gal-h-full, .gal-h-half, .gal-v-half {
+                grid-column: span 1;
+                aspect-ratio: auto;
+                height: 250px;
+            }
         }
 
-        @media (max-width: 768px) { 
-            .gallery-grid { 
-                grid-template-columns: 1fr; 
-                width: 90%; 
-            } 
-            .v-top, .v-mid, .h-mid, .wide-bot { 
-                grid-column: span 1; 
-                aspect-ratio: auto; 
-                height: 300px;
-            } 
-        }
-        
-        /* === WIDEO PIONOWE (9:16) === */ 
-        #wideo { background-color: var(--navy); color: var(--white); } 
-        #wideo .section-title { color: var(--white); } 
+        /* === WIDEO PIONOWE (9:16) === */
+        #wideo { background-color: var(--navy); color: var(--white); }
+        #wideo .section-title { color: var(--white); }
         .video-container { 
-    position: relative; 
-    width: 90%; 
-    max-width: 380px; /* Szerokość idealna dla telefonu na ekranie komputera */
-    aspect-ratio: 9 / 16; 
-    margin: 40px auto; 
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-}
-        .video-container iframe, .video-placeholder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; } 
-        .video-placeholder { background: linear-gradient(to bottom, #1e293b, #0f172a); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; } 
-        .play-btn { width: 70px; height: 70px; background: var(--gold); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; margin-bottom: 20px; } 
-        .play-btn::after { content: ''; border-top: 12px solid transparent; border-bottom: 12px solid transparent; border-left: 20px solid var(--navy); margin-left: 5px; } 
-        
-        /* === KONTAKT === */ 
-        .contact-wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: 0; background: var(--white); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); } 
-        .contact-info { background: var(--navy); color: var(--white); padding: 4rem; } 
-        .contact-info h3 { color: var(--gold); margin-bottom: 2rem; font-size: 2rem; } 
-        .info-item { margin-bottom: 1.5rem; } 
-        .info-item span { display: block; color: var(--gold); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 5px; } 
-        .contact-form { padding: 4rem; } 
-        .contact-form input, .contact-form textarea { width: 100%; padding: 15px; margin-bottom: 1.5rem; border: 1px solid #ddd; border-radius: 4px; font-family: var(--font-body); } 
-        
-        /* === STOPKA === */ 
-        footer { background: var(--navy); color: #64748b; text-align: center; padding: 3rem; border-top: 1px solid #1e293b; } 
-        
-        /* === ANIMACJE === */ 
-        .fade-in { opacity: 0; transform: translateY(30px); transition: 0.8s all ease-out; } 
-        .fade-in.visible { opacity: 1; transform: translateY(0); } 
-        
-        /* === MOBILE === */ 
-        @media (max-width: 992px) { .contact-wrap { grid-template-columns: 1fr; } header h1 { font-size: 2.8rem; } section { padding: 4rem 5%; } } 
-        @media (max-width: 768px) { .nav-links { position: fixed; right: -100%; top: 76px; flex-direction: column; background: var(--navy); width: 100%; text-align: center; padding: 2rem; transition: 0.3s; border-bottom: 2px solid var(--gold); } .nav-links.active { right: 0; } .hamburger { display: block; } } 
-    </style> 
-</head> 
-<body> 
-    <nav> 
-        <a href="#hero" class="logo">Kościuszki 25</a> 
-        <div class="hamburger" id="hamburger">☰</div> 
-        <ul class="nav-links" id="nav-links"> 
-            <li><a href="#hero">Start</a></li> 
-            <li><a href="#o-inwestycji">Inwestycja</a></li> 
-            <li><a href="#galeria">Galeria</a></li> 
-            <li><a href="#wideo">Wideo</a></li> 
-            <li><a href="#kontakt">Kontakt</a></li> 
-        </ul> 
-    </nav> 
-    
-    <header id="hero"> 
-        <h1 class="fade-in">Apartamenty, które <span>zmieniają perspektywę</span></h1> 
-        <p class="fade-in">Luksusowa nadbudowa w samym centrum Głuchołaz. Prestiż, styl i panoramiczne widoki.</p> 
-        <a href="#o-inwestycji" class="btn fade-in">Sprawdź ofertę</a> 
-    </header> 
-    
-    <section id="o-inwestycji"> 
-        <div class="fade-in"> 
-            <h2 class="section-title">O Inwestycji</h2> 
-            <p class="section-subtitle">Wyjątkowa lokalizacja w sercu miasta</p> 
-        </div> 
-        <div class="about-grid"> 
-            <div class="about-text fade-in"> 
-                <h3>Głuchołazy dynamicznie się rozwijają... prestiżowa nadbudowa w klasycznym stylu z panoramicznym tarasem na dachu.</h3> 
-                <p>Nasza inwestycja to połączenie historycznej elegancji z nowoczesnym komfortem. Oferujemy lokale o metrażach 40–50 m², zaprojektowane z dbałością o każdy detal.</p> 
-                <div class="highlight-box"> 
-                    <h4>ZYSKAJ NA STARCIE</h4> 
-                    <div class="price-tag"> 
-                        <span id="dynamic-price">6 500</span> <small>PLN/m²</small> <span class="old-price">7 500 PLN/m²</span> 
-                    </div> 
-                    <p style="margin: 10px 0; font-weight: 600; color: var(--navy);">Oferta limitowana dla pierwszych lokali!</p> 
-                    <ul style="list-style: none; margin-top: 15px; text-align: left;"> 
-                        <li>• Rezerwacja tylko 20 000 PLN</li> 
-                        <li>• Płatność w ratach (3x30%)</li> 
-                        <li>• Niskie koszty eksploatacji</li> 
-                    </ul> 
-                </div> 
-            </div> 
-        </div> 
-    </section> 
-    
-    <section id="galeria"> 
-        <div class="fade-in"> 
-            <h2 class="section-title">Galeria</h2> 
-            <p class="section-subtitle">Standard Premium</p> 
-        </div> 
-        <div class="gallery-grid"> 
-            
-            <div class="gallery-item v-top fade-in"> 
-                <a href="https://ibb.co/4n9BGmST" class="link-nieklikalny"><img src="https://i.ibb.co/dw1nqWp2/photo-2026-05-04-23-23-23-2.jpg" alt="Apartament"></a> 
-            </div> 
-            <div class="gallery-item v-top fade-in"> 
-                <a href="https://ibb.co/9mFD4831" class="link-nieklikalny"><img src="https://i.ibb.co/BHXp6zKQ/photo-2026-05-04-23-23-23.jpg" alt="Apartament"></a> 
-            </div> 
-            <div class="gallery-item v-top fade-in"> 
-                <a href="https://ibb.co/KcSh4s5g" class="link-nieklikalny"><img src="https://i.ibb.co/CpD8C9wy/photo-2026-05-04-23-23-22.jpg" alt="Apartament"></a> 
-            </div> 
-            <div class="gallery-item v-mid fade-in"> 
-                <a href="https://imgbb.com/" class="link-nieklikalny"><img src="https://i.ibb.co/C5NZLPfR/photo-2026-05-04-23-23-19.jpg" alt="Apartament"></a> 
-            </div> 
-            <div class="gallery-item v-mid fade-in"> 
-                <a href="https://ibb.co/yn4vS7vw" class="link-nieklikalny"><img src="https://i.ibb.co/7JkM4LMw/photo-2026-05-04-23-23-17.jpg" alt="Apartament"></a> 
-            </div> 
-            
-            <div class="gallery-item h-mid fade-in"> 
-                <a href="https://ibb.co/60FtQyXN" class="link-nieklikalny"><img src="https://i.ibb.co/hFVd0gYC/photo-2026-05-04-23-23-21.jpg" alt="Apartament"></a> 
-            </div> 
-            <div class="gallery-item h-mid fade-in"> 
-                <a href="https://ibb.co/WNhVz8gN" class="link-nieklikalny"><img src="https://i.ibb.co/LDFNgjnD/photo-2026-05-04-23-23-20.jpg" alt="Apartament"></a> 
-            </div> 
-            <div class="gallery-item h-mid fade-in"> 
-                <a href="https://ibb.co/Xf3swtjX" class="link-nieklikalny"><img src="https://i.ibb.co/BHrZ1BcL/photo-2026-05-04-23-23-16.jpg" alt="Apartament"></a> 
-            </div> 
-            
-            <div class="gallery-item wide-bot fade-in"> 
-                <a href="https://ibb.co/Fb299Fhp" class="link-nieklikalny"><img src="https://i.ibb.co/vxpbbSc9/photo-2026-05-04-23-23-18.jpg" alt="Apartament"></a> 
-            </div> 
-            
-        </div> 
+            position: relative; 
+            width: 90%; 
+            max-width: 380px; 
+            aspect-ratio: 9 / 16; 
+            margin: 40px auto; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4); 
+        }
+
+        /* === KONTAKT === */
+        .contact-wrap { 
+            display: grid; 
+            grid-template-columns: 1fr 1.2fr; 
+            gap: 0; 
+            background: var(--white); 
+            border-radius: 16px; 
+            overflow: hidden; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1); 
+        }
+        .contact-info { background: var(--navy); color: var(--white); padding: 4rem; }
+        .contact-info h3 { color: var(--gold); margin-bottom: 2rem; font-size: 2rem; }
+        .info-item { margin-bottom: 1.5rem; }
+        .info-item span { display: block; color: var(--gold); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 5px; }
+        .contact-form { padding: 4rem; }
+        .contact-form input, .contact-form textarea { width: 100%; padding: 15px; margin-bottom: 1.5rem; border: 1px solid #ddd; border-radius: 4px; font-family: var(--font-body); }
+
+        /* === STOPKA === */
+        footer { background: var(--navy); color: #64748b; text-align: center; padding: 3rem; border-top: 1px solid #1e293b; }
+
+        /* === ANIMACJE === */
+        .fade-in { opacity: 0; transform: translateY(30px); transition: 0.8s all ease-out; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* === MOBILE === */
+        @media (max-width: 992px) {
+            .contact-wrap { grid-template-columns: 1fr; }
+            header h1 { font-size: 2.8rem; }
+            section { padding: 4rem 5%; }
+        }
+        @media (max-width: 768px) {
+            .nav-links { 
+                position: fixed; right: -100%; top: 76px; flex-direction: column; background: var(--navy); 
+                width: 100%; text-align: center; padding: 2rem; transition: 0.3s; border-bottom: 2px solid var(--gold); 
+            }
+            .nav-links.active { right: 0; }
+            .hamburger { display: block; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#hero" class="logo">Kościuszki 25</a>
+        <div class="hamburger" id="hamburger">☰</div>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#hero">Start</a></li>
+            <li><a href="#o-inwestycji">Inwestycja</a></li>
+            <li><a href="#lokalizacja">Lokalizacja</a></li>
+            <li><a href="#galeria">Galeria</a></li>
+             <li><a href="#wideo">Wideo</a></li>
+            <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+    </nav>
+
+    <header id="hero">
+        <h1 class="fade-in">Apartamenty, które <span>zmieniają perspektywę</span></h1>
+        <p class="fade-in">Luksusowa nadbudowa w samym centrum Głuchołaz. Prestiż, styl i panoramiczne widoki.</p>
+        <a href="#o-inwestycji" class="btn fade-in">Sprawdź ofertę</a>
+    </header>
+
+    <section id="o-inwestycji">
+        <div class="fade-in">
+            <h2 class="section-title">Inwestycja Kościuszki 25</h2>
+            <p class="section-subtitle">Zyskaj na starcie w sercu Głuchołaz</p>
+        </div>
+
+        <div class="about-text fade-in">
+            <h3>Kameralna rewitalizacja w klasycznym stylu</h3>
+            <p>
+                Głuchołazy dynamicznie się rozwijają, stając się coraz atrakcyjniejszym miejscem zarówno do życia, jak i pod kątem turystycznym. 
+                To idealny moment, aby ulokować kapitał w nieruchomości w samym sercu miasta. Nasz projekt to połączenie historycznej elegancji 
+                z nowoczesnym komfortem – <strong>prestiżowa nadbudowa z panoramicznym tarasem na dachu</strong>, oferująca najbardziej poszukiwane metraże od 40 do 50 m².
+            </p>
+        </div>
+
+        <div class="pricing-container fade-in">
+            <div class="highlight-box">
+                <h4 style="color: var(--navy); letter-spacing: 1px;">OFERTA SPECJALNA</h4>
+                <p style="font-size: 0.85rem; color: var(--text-dark); margin-bottom: 5px;">Dla pierwszych 3–5 nabywców:</p>
+                <div class="price-tag">
+                    <span id="dynamic-price">6 500</span> <small>PLN/m²</small>
+                    <span class="old-price">7 500 PLN/m²</span>
+                </div>
+                
+                <ul style="list-style: none; margin-top: 15px; text-align: left; width: 100%;">
+                    <li style="margin-bottom: 10px;"><strong>✅ Łatwy start:</strong> Rezerwacja tylko 20 000 PLN</li>
+                    <li style="margin-bottom: 10px;"><strong>✅ Raty:</strong> System 3x30% na etapach budowy</li>
+                    <li style="margin-bottom: 10px;"><strong>✅ Niskie koszty:</strong> Energooszczędna konstrukcja</li>
+                </ul>
+                <p style="margin-top: 15px; font-weight: 700; color: var(--gold); font-size: 0.9rem;">Maksymalny zysk, komfortowy system płatności!</p>
+            </div>
+
+            <div class="pricing-table-wrapper">
+                <table class="pricing-table">
+                    <thead>
+                        <tr>
+                            <th>Typ Lokalu</th>
+                            <th>Metraż</th>
+                            <th>Cena Promocyjna</th>
+                            <th>Cena Rynkowa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Apartament 1-pokojowy</td>
+                            <td>40 m²</td>
+                            <td style="color: var(--gold);"><strong>260 000 PLN</strong></td>
+                            <td>300 000 PLN</td>
+                        </tr>
+                        <tr>
+                            <td>Apartament 2-pokojowy</td>
+                            <td>45 m²</td>
+                            <td style="color: var(--gold);"><strong>292 500 PLN</strong></td>
+                            <td>337 500 PLN</td>
+                        </tr>
+                        <tr>
+                            <td>Apartament 2-pokojowy</td>
+                            <td>50 m²</td>
+                            <td style="color: var(--gold);"><strong>325 000 PLN</strong></td>
+                            <td>375 000 PLN</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <span class="table-footer">*Podane ceny są cenami netto. Oferta ograniczona czasowo.</span>
+            </div>
+        </div>
     </section>
-    
-    <section id="wideo"> 
-        <div class="fade-in"> 
-            <h2 class="section-title">Wideo Prezentacja</h2> 
-            <p class="section-subtitle">Kościuszki 25 - Standard Premium</p> 
-        </div> 
-        <div class="video-container fade-in"> 
-            <video 
-                controls 
-                playsinline 
-                preload="auto"
-                style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px; background: #000;">
+
+    <section id="lokalizacja">
+        <div class="fade-in">
+            <h2 class="section-title">Lokalizacja</h2>
+            <p class="section-subtitle">W samym sercu Głuchołaz</p>
+        </div>
+        
+        <div class="location-content fade-in">
+            <div class="location-text">
+                <h3>ul. Kościuszki 25, 48-340 Głuchołazy</h3>
+                <p>Nasza inwestycja znajduje się w doskonałym punkcie na mapie miasta. Wszędzie masz blisko – sklepy, restauracje, parki i urzędy są na wyciągnięcie ręki, co gwarantuje niesamowitą wygodę na co dzień.</p>
+                <a href="https://maps.app.goo.gl/m3Ftw8LNMDYMJN2Y9" target="_blank" class="btn" style="margin-top: 25px;">Otwórz w Google Maps</a>
+            </div>
+            
+            <div class="location-images">
+                <a class="link-nieklikalny" href="https://ibb.co/Nq1hyX9"><img src="https://i.ibb.co/1NsVm3r/photo-2026-05-05-10-29-40.jpg" alt="photo-2026-05-05-10-29-40" border="0" /></a>
+                <a class="link-nieklikalny" href="https://ibb.co/dnf7yt4"><img src="https://i.ibb.co/3tTkHvm/photo-2026-05-05-10-29-57.jpg" alt="photo-2026-05-05-10-29-57" border="0" /></a>
+            </div>
+        </div>
+    </section>
+    <section id="galeria">
+        <div class="fade-in">
+            <h2 class="section-title">Galeria</h2>
+            <p class="section-subtitle">Standard Premium</p>
+        </div>
+        
+        <div class="gallery-grid fade-in">
+            <div class="gal-item gal-h-full">
+                <a href="https://ibb.co/Xf3swtjX" class="link-nieklikalny"><img src="https://i.ibb.co/BHrZ1BcL/photo-2026-05-04-23-23-16.jpg" alt="photo-2026-05-04-23-23-16" border="0" /></a>
+            </div>
+            
+            <div class="gal-item gal-h-half">
+                <a href="https://ibb.co/60FtQyXN" class="link-nieklikalny"><img src="https://i.ibb.co/hFVd0gYC/photo-2026-05-04-23-23-21.jpg" alt="Apartament"></a>
+            </div>
+            <div class="gal-item gal-h-half">
+                <a href="https://ibb.co/WNhVz8gN" class="link-nieklikalny"><img src="https://i.ibb.co/LDFNgjnD/photo-2026-05-04-23-23-20.jpg" alt="Apartament"></a>
+            </div>
+            
+            <div class="gal-item gal-v-half">
+                <a href="https://ibb.co/KcSh4s5g" class="link-nieklikalny"><img src="https://i.ibb.co/CpD8C9wy/photo-2026-05-04-23-23-22.jpg" alt="photo-2026-05-04-23-23-22" border="0" /></a>
+            </div>
+            <div class="gal-item gal-v-half">
+                <a href="https://ibb.co/4n9BGmST" class="link-nieklikalny"><img src="https://i.ibb.co/dw1nqWp2/photo-2026-05-04-23-23-23-2.jpg" alt="photo-2026-05-04-23-23-23-2" border="0" /></a>
+            </div>
+            
+            <div class="gal-item gal-v-half">
+                <a href="https://ibb.co/9mFD4831" class="link-nieklikalny"><img src="https://i.ibb.co/BHXp6zKQ/photo-2026-05-04-23-23-23.jpg" alt="photo-2026-05-04-23-23-23" border="0" /></a>
+            </div>
+            <div class="gal-item gal-v-half">
+                <a href="https://ibb.co/yn4vS7vw" class="link-nieklikalny"><img src="https://i.ibb.co/7JkM4LMw/photo-2026-05-04-23-23-17.jpg" alt="Apartament"></a>
+            </div>
+        </div>
+    </section>
+
+    <section id="wideo">
+        <div class="fade-in">
+            <h2 class="section-title">Wideo Prezentacja</h2>
+            <p class="section-subtitle">Kościuszki 25 - Standard Premium</p>
+        </div>
+        <div class="video-container fade-in">
+            <video controls playsinline preload="auto" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px; background: #000;">
                 <source src="video.mp4" type="video/mp4">
                 Twoja przeglądarka nie obsługuje odtwarzacza wideo.
             </video>
-        </div> 
+        </div>
     </section>
-    
-    <section id="kontakt"> 
-        <div class="fade-in"> 
-            <h2 class="section-title">Kontakt</h2> 
-            <p class="section-subtitle">Zapraszamy do biura sprzedaży</p> 
-        </div> 
-        <div class="contact-wrap fade-in"> 
-            <div class="contact-info"> 
-                <h3>Porozmawiajmy o Twoim nowym domu</h3> 
-                <div class="info-item"> 
-                    <span>Adres</span> 
-                    <p>ul. Kościuszki 25, Głuchołazy</p> 
-                </div> 
-                <div class="info-item"> 
-                    <span>Telefon</span> 
-                    <p>+48 789 108 920</p> 
-                </div> 
-                <div class="info-item"> 
-                    <span>Email</span> 
-                    <p>biuro@kosciuszki25.pl</p> 
-                </div> 
-            </div> 
-            <div class="contact-form"> 
-                <form onsubmit="event.preventDefault(); alert('Wiadomość wysłana!');"> 
-                    <input type="text" placeholder="Imię i Nazwisko" required> 
-                    <input type="email" placeholder="Adres Email" required> 
-                    <textarea rows="5" placeholder="W czym możemy pomóc?" required></textarea> 
-                    <button type="submit" class="btn" style="width: 100%; border: none; cursor: pointer;">Wyślij wiadomość</button> 
-                </form> 
-            </div> 
-        </div> 
-    </section> 
-    
-    <footer> 
-        <p>&copy; 2026 Apartamenty Kościuszki 25. Projekt i realizacja Premium Real Estate.</p> 
-    </footer> 
-    
-    <script> 
-        // Menu Hamburger 
-        const hamburger = document.getElementById('hamburger'); 
-        const navLinks = document.getElementById('nav-links'); 
-        hamburger.addEventListener('click', () => { 
-            navLinks.classList.toggle('active'); 
-            hamburger.innerText = navLinks.classList.contains('active') ? '✕' : '☰'; 
-        }); 
-        
-        // Intersection Observer for Animations 
-        const observer = new IntersectionObserver((entries) => { 
-            entries.forEach(entry => { 
-                if (entry.isIntersecting) { 
-                    entry.target.classList.add('visible'); 
-                } 
-            }); 
-        }, { threshold: 0.1 }); 
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el)); 
-        
-        // DYNAMICZNY LICZNIK CENY (Wzrost o 1000 co pół roku) 
-        const startDate = new Date('2026-05-01T00:00:00').getTime(); 
-        const basePrice = 6500; 
-        const increaseAmount = 1000; 
-        const halfYearMs = 182.5 * 24 * 60 * 60 * 1000; 
-        
-        function updatePrice() { 
-            const now = new Date().getTime(); 
-            const elapsed = now - startDate; 
-            let periods = Math.floor(elapsed / halfYearMs); 
-            if (periods < 0) periods = 0; 
-            const currentPrice = basePrice + (periods * increaseAmount); 
-            const formatted = currentPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "); 
-            document.getElementById('dynamic-price').innerText = formatted; 
-        } 
-        updatePrice(); 
-        setInterval(updatePrice, 60000); // Aktualizacja co minutę 
-    </script> 
-</body> 
+
+    <section id="kontakt">
+        <div class="fade-in">
+            <h2 class="section-title">Kontakt</h2>
+            <p class="section-subtitle">Zapraszamy do biura sprzedaży</p>
+        </div>
+        <div class="contact-wrap fade-in">
+            <div class="contact-info">
+                <h3>Porozmawiajmy o Twoim nowym domu</h3>
+                <div class="info-item">
+                    <span>Adres</span>
+                    <p>ul. Kościuszki 25, Głuchołazy</p>
+                </div>
+                <div class="info-item">
+                    <span>Telefon</span>
+                    <p>+48 789 108 920</p>
+                </div>
+                <div class="info-item">
+                    <span>Email</span>
+                    <p>biuro@kosciuszki25.pl</p>
+                </div>
+            </div>
+            <div class="contact-form">
+                <form onsubmit="event.preventDefault(); alert('Wiadomość wysłana!');">
+                    <input type="text" placeholder="Imię i Nazwisko" required>
+                    <input type="email" placeholder="Adres Email" required>
+                    <textarea rows="5" placeholder="W czym możemy pomóc?" required></textarea>
+                    <button type="submit" class="btn" style="width: 100%; border: none; cursor: pointer;">Wyślij wiadomość</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Apartamenty Kościuszki 25. Projekt i realizacja Premium Real Estate.</p>
+    </footer>
+
+    <script>
+        // Menu Hamburger
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.innerText = navLinks.classList.contains('active') ? '✕' : '☰';
+        });
+
+        // Intersection Observer for Animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // DYNAMICZNY LICZNIK CENY
+        const startDate = new Date('2026-05-02T00:00:00').getTime();
+        const basePrice = 6500;
+        const increaseAmount = 1000;
+        const halfYearMs = 182.5 * 24 * 60 * 60 * 1000;
+
+        function updatePrice() {
+            const now = new Date().getTime();
+            const elapsed = now - startDate;
+            let periods = Math.floor(elapsed / halfYearMs);
+            if (periods < 0) periods = 0;
+            const currentPrice = basePrice + (periods * increaseAmount);
+            const formatted = currentPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+            document.getElementById('dynamic-price').innerText = formatted;
+        }
+
+        updatePrice();
+        setInterval(updatePrice, 60000); // Aktualizacja co minutę
+    </script>
+</body>
 </html>
