@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apartamenty Kościuszki 25 | Głuchołazy</title>
+    <title>Apartamenty Kościuszki 25b | Głuchołazy</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
@@ -309,7 +309,7 @@
 <body>
 
     <nav>
-        <a href="#hero" class="logo">Kościuszki 25</a>
+        <a href="#hero" class="logo">Kościuszki 25b</a>
         <div class="hamburger" id="hamburger">☰</div>
         <ul class="nav-links" id="nav-links">
             <li><a href="#hero">Start</a></li>
@@ -329,7 +329,7 @@
 
     <section id="o-inwestycji">
         <div class="fade-in">
-            <h2 class="section-title">Inwestycja Kościuszki 25</h2>
+            <h2 class="section-title">Inwestycja Kościuszki 25b</h2>
             <p class="section-subtitle">Zyskaj na starcie w sercu Głuchołaz</p>
         </div>
 
@@ -345,7 +345,7 @@
         <div class="pricing-container fade-in">
             <div class="highlight-box">
                 <h4 style="color: var(--navy); letter-spacing: 1px;">OFERTA SPECJALNA</h4>
-                <p style="font-size: 0.85rem; color: var(--text-dark); margin-bottom: 5px;">Dla pierwszych 3–5 nabywców:</p>
+                <p style="font-size: 0.85rem; color: var(--text-dark); margin-bottom: 5px;">Dla pierwszych 3 nabywców:</p>
                 <div class="price-tag">
                     <span id="dynamic-price">6 500</span> <small>PLN/m²</small>
                     <span class="old-price">7 500 PLN/m²</span>
@@ -390,7 +390,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <span class="table-footer">*Podane ceny są cenami netto. Oferta ograniczona czasowo.</span>
+                <span class="table-footer">*Podane ceny są cenami brutto. Oferta ograniczona czasowo.</span>
             </div>
         </div>
     </section>
@@ -403,7 +403,7 @@
         
         <div class="location-content fade-in">
             <div class="location-text">
-                <h3>ul. Kościuszki 25, 48-340 Głuchołazy</h3>
+                <h3>ul. Kościuszki 25b, 48-340 Głuchołazy</h3>
                 <p>Nasza inwestycja znajduje się w doskonałym punkcie na mapie miasta. Wszędzie masz blisko – sklepy, restauracje, parki i urzędy są na wyciągnięcie ręki, co gwarantuje niesamowitą wygodę na co dzień.</p>
                 <a href="https://maps.app.goo.gl/m3Ftw8LNMDYMJN2Y9" target="_blank" class="btn" style="margin-top: 25px;">Otwórz w Google Maps</a>
             </div>
@@ -451,7 +451,7 @@
     <section id="wideo">
         <div class="fade-in">
             <h2 class="section-title">Wideo Prezentacja</h2>
-            <p class="section-subtitle">Kościuszki 25 - Standard Premium</p>
+            <p class="section-subtitle">Kościuszki 25b - Standard Premium</p>
         </div>
         <div class="video-container fade-in">
             <video controls playsinline preload="auto" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px; background: #000;">
@@ -471,7 +471,7 @@
                 <h3>Porozmawiajmy o Twoim nowym domu</h3>
                 <div class="info-item">
                     <span>Adres</span>
-                    <p>ul. Kościuszki 25, Głuchołazy</p>
+                    <p>ul. Kościuszki 25b, Głuchołazy</p>
                 </div>
                 <div class="info-item">
                     <span>Telefon</span>
@@ -494,10 +494,42 @@
     </section>
 
     <footer>
-        <p>&copy; 2026 Apartamenty Kościuszki 25. Projekt i realizacja Premium Real Estate.</p>
+        <p>&copy; 2026 Apartamenty Kościuszki 25b. Projekt i realizacja Premium Real Estate.</p>
     </footer>
 
     <script>
+        // Konfiguracja
+        const startDate = new Date('2026-06-01T00:00:00').getTime(); // Data startu (6500 zł)
+        const basePrice = 6500;
+        
+        // Obliczamy interwał: 1000 zł w 182.5 dnia (pół roku)
+        // 182.5 * 24 * 60 * 60 * 1000 / 1000 = 15768000 ms
+        const msPerOneZloty = 15768000; 
+    
+        function updatePrice() {
+            const now = new Date().getTime();
+            const elapsed = now - startDate;
+    
+            if (elapsed < 0) {
+                // Jeśli jeszcze nie ma 1 maja 2026, pokazujemy cenę bazową
+                document.getElementById('dynamic-price').innerText = "6 500";
+                return;
+            }
+    
+            // Liczymy o ile złotych wzrosła cena od startu
+            const priceIncrease = Math.floor(elapsed / msPerOneZloty);
+            const currentPrice = basePrice + priceIncrease;
+    
+            // Formatowanie ceny ze spacją jako separatorem tysięcy (np. 6 501)
+            const formatted = currentPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+            
+            document.getElementById('dynamic-price').innerText = formatted;
+        }
+    
+        // Uruchom od razu i odświeżaj co minutę (na wypadek, gdyby ktoś trzymał stronę otwartą długo)
+        updatePrice();
+        setInterval(updatePrice, 60000); 
+    
         // Menu Hamburger
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('nav-links');
@@ -505,35 +537,14 @@
             navLinks.classList.toggle('active');
             hamburger.innerText = navLinks.classList.contains('active') ? '✕' : '☰';
         });
-
-        // Intersection Observer for Animations
+    
+        // Observer dla animacji
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('visible');
             });
         }, { threshold: 0.1 });
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-        // DYNAMICZNY LICZNIK CENY
-        const startDate = new Date('2026-05-02T00:00:00').getTime();
-        const basePrice = 6500;
-        const increaseAmount = 1000;
-        const halfYearMs = 182.5 * 24 * 60 * 60 * 1000;
-
-        function updatePrice() {
-            const now = new Date().getTime();
-            const elapsed = now - startDate;
-            let periods = Math.floor(elapsed / halfYearMs);
-            if (periods < 0) periods = 0;
-            const currentPrice = basePrice + (periods * increaseAmount);
-            const formatted = currentPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-            document.getElementById('dynamic-price').innerText = formatted;
-        }
-
-        updatePrice();
-        setInterval(updatePrice, 60000); // Aktualizacja co minutę
     </script>
 </body>
 </html>
