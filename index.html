@@ -53,16 +53,39 @@
         .nav-links a:hover { color: var(--gold); }
         .hamburger { display: none; cursor: pointer; font-size: 2rem; color: var(--gold); }
 
-        /* === HERO === */
+        /* === HERO (ZMIENIONE NA WIDEO) === */
         header { 
             height: 100vh; 
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.4)), url("https://i.ibb.co/BHrZ1BcL/photo-2026-05-04-23-23-16.jpg") center/cover fixed; 
+            position: relative;
+            overflow: hidden;
             display: flex; 
             flex-direction: column; 
             justify-content: center; 
             align-items: flex-start; 
             padding: 0 10%; 
             color: var(--white); 
+        }
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.4));
+            z-index: 0;
+        }
+        header h1, header p, header .btn {
+            position: relative;
+            z-index: 1;
         }
         header h1 { font-size: 4rem; margin-bottom: 1rem; color: var(--white); max-width: 800px; line-height: 1.1; }
         header h1 span { color: var(--gold); font-style: italic; }
@@ -137,7 +160,7 @@
             width: 100%;
             border-collapse: collapse;
             text-align: left;
-            min-width: 500px; /* Zapobiega ściskaniu kolumn na mobile */
+            min-width: 500px; 
         }
         .pricing-table th {
             background: var(--navy);
@@ -165,7 +188,7 @@
             #o-inwestycji { padding: 6rem 10%; }
             .about-text h3 { font-size: 2.5rem; }
             .pricing-container {
-                grid-template-columns: 1fr 2fr; /* Box 1 część, Tabela 2 części */
+                grid-template-columns: 1fr 2fr; 
             }
             .highlight-box {
                 align-items: flex-start;
@@ -186,13 +209,13 @@
         .location-text h3 { font-size: 1.8rem; margin-bottom: 1rem; color: var(--navy); }
         .location-images {
             display: grid;
-            grid-template-columns: 1fr; /* Zdjęcia jedno pod drugim */
+            grid-template-columns: 1fr; 
             gap: 20px;
         }
         .location-images img {
             width: 100%;
             height: 100%;
-            aspect-ratio: 4 / 3; /* Wymusza poziomy format */
+            aspect-ratio: 4 / 3; 
             object-fit: cover;
             border-radius: 8px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
@@ -206,9 +229,9 @@
         /* === NOWA GALERIA === */
         .gallery-grid { 
             display: grid; 
-            grid-template-columns: 1fr 1fr; /* 2 kolumny */
+            grid-template-columns: 1fr 1fr; 
             gap: 15px; 
-            width: 40%; /* Szersza niż stara, żeby układ wyglądał lepiej */
+            width: 40%; 
             margin: 0 auto; 
         }
         .gal-item { 
@@ -227,19 +250,9 @@
         }
         .gal-item:hover img { transform: scale(1.05); }
 
-        /* Klasy sterujące wyglądem kafelków */
-        .gal-h-full { 
-            grid-column: span 2; 
-            aspect-ratio: 21 / 9; /* Poziome szerokie (Panorama) */
-        }
-        .gal-h-half { 
-            grid-column: span 1; 
-            aspect-ratio: 4 / 3; /* Poziome mniejsze */
-        }
-        .gal-v-half { 
-            grid-column: span 1; 
-            aspect-ratio: 3 / 4; /* Pionowe */
-        }
+        .gal-h-full { grid-column: span 2; aspect-ratio: 21 / 9; }
+        .gal-h-half { grid-column: span 1; aspect-ratio: 4 / 3; }
+        .gal-v-half { grid-column: span 1; aspect-ratio: 3 / 4; }
         .link-nieklikalny { pointer-events: none; cursor: default; }
 
         @media (max-width: 1200px) { .gallery-grid { width: 90%; } }
@@ -316,12 +329,16 @@
             <li><a href="#o-inwestycji">Inwestycja</a></li>
             <li><a href="#lokalizacja">Lokalizacja</a></li>
             <li><a href="#galeria">Galeria</a></li>
-             <li><a href="#wideo">Wideo</a></li>
+            <li><a href="#wideo">Wideo</a></li>
             <li><a href="#kontakt">Kontakt</a></li>
         </ul>
     </nav>
 
     <header id="hero">
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="https://www.dropbox.com/scl/fi/g0it484vd9qs0kbh3zabr/video_2026-05-09_12-26-12.mp4?rlkey=u5w3fa51e1qdczr2gqln7ymcd&st=w90787sg&raw=1" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
         <h1 class="fade-in">Apartamenty, które <span>zmieniają perspektywę</span></h1>
         <p class="fade-in">Luksusowa nadbudowa w samym centrum Głuchołaz. Prestiż, styl i panoramiczne widoki.</p>
         <a href="#o-inwestycji" class="btn fade-in">Sprawdź ofertę</a>
@@ -336,9 +353,7 @@
         <div class="about-text fade-in">
             <h3>Kameralna rewitalizacja w klasycznym stylu</h3>
             <p>
-                Głuchołazy dynamicznie się rozwijają, stając się coraz atrakcyjniejszym miejscem zarówno do życia, jak i pod kątem turystycznym. 
-                To idealny moment, aby ulokować kapitał w nieruchomości w samym sercu miasta. Nasz projekt to połączenie historycznej elegancji 
-                z nowoczesnym komfortem – <strong>prestiżowa nadbudowa z panoramicznym tarasem na dachu</strong>, oferująca najbardziej poszukiwane metraże od 40 do 50 m².
+                Głuchołazy dynamicznie się rozwijają, stając się coraz atrakcyjniejszym miejscem zarówno do życia, jak i pod kątem turystycznym. To idealny moment, aby ulokować kapitał w nieruchomości w samym sercu miasta. Nasz projekt to połączenie historycznej elegancji z nowoczesnym komfortem – <strong>prestiżowa nadbudowa z panoramicznym tarasem na dachu</strong>, oferująca najbardziej poszukiwane metraże od 40 do 50 m².
             </p>
         </div>
 
@@ -414,6 +429,7 @@
             </div>
         </div>
     </section>
+
     <section id="galeria">
         <div class="fade-in">
             <h2 class="section-title">Galeria</h2>
@@ -494,7 +510,7 @@
     </section>
 
     <footer>
-        <p>&copy; 2026 Apartamenty Kościuszki 25b. Projekt i realizacja Premium Real Estate.</p>
+        <p>© 2026 Apartamenty Kościuszki 25b. Projekt i realizacja Premium Real Estate.</p>
     </footer>
 
     <script>
@@ -505,31 +521,31 @@
         // Obliczamy interwał: 1000 zł w 182.5 dnia (pół roku)
         // 182.5 * 24 * 60 * 60 * 1000 / 1000 = 15768000 ms
         const msPerOneZloty = 15768000; 
-    
+
         function updatePrice() {
             const now = new Date().getTime();
             const elapsed = now - startDate;
-    
+
             if (elapsed < 0) {
                 // Jeśli jeszcze nie ma 1 maja 2026, pokazujemy cenę bazową
                 document.getElementById('dynamic-price').innerText = "6 500";
                 return;
             }
-    
+
             // Liczymy o ile złotych wzrosła cena od startu
             const priceIncrease = Math.floor(elapsed / msPerOneZloty);
             const currentPrice = basePrice + priceIncrease;
-    
+
             // Formatowanie ceny ze spacją jako separatorem tysięcy (np. 6 501)
             const formatted = currentPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
             
             document.getElementById('dynamic-price').innerText = formatted;
         }
-    
+
         // Uruchom od razu i odświeżaj co minutę (na wypadek, gdyby ktoś trzymał stronę otwartą długo)
         updatePrice();
         setInterval(updatePrice, 60000); 
-    
+
         // Menu Hamburger
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('nav-links');
@@ -537,7 +553,7 @@
             navLinks.classList.toggle('active');
             hamburger.innerText = navLinks.classList.contains('active') ? '✕' : '☰';
         });
-    
+
         // Observer dla animacji
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
